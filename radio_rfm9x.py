@@ -10,8 +10,6 @@ import time
 import busio
 from digitalio import DigitalInOut, Direction, Pull
 import board
-# Import the SSD1306 module.
-import adafruit_ssd1306
 # Import RFM9x
 import adafruit_rfm9x
 
