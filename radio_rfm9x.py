@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """
 Example for using the RFM9x Radio with Raspberry Pi.
 
@@ -16,6 +18,7 @@ import adafruit_rfm9x
 # Import more
 import threading
 import _thread
+import subprocess
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -30,15 +33,26 @@ prev_packet = None
 
 # Start thread to read input
 def input_thread(messages, num_messages):
+    temp = 65
     while True: 
-        text = input()
-        messages.append(text)
-        num_messages[0] = num_messages[0] + 1
+
+        #text = input()
+        #messages.append(text)
+        #num_messages[0] = num_messages[0] + 1
+
+        # Temporary! 
+        messages.append(chr(temp))
+        num_messages[0] += 1
+        temp += 1
+        if temp > 122:
+            temp = 65
 
 num_messages = [0]
 num_printed = 0
 messages = []
 _thread.start_new_thread(input_thread, (messages, num_messages))
+
+light_status = 1
 
 print("RasPi LoRa")
 packet = None 
@@ -50,7 +64,7 @@ while True:
     if packet is not None:
         # Display the packet text and rssi
         prev_packet = packet
-        packet_text = str(prev_packet, "utf-8")
+        packet_text = prev_packet.encode('utf-8').strip()
         print("RX: " + packet_text)
         time.sleep(1)
 
@@ -60,5 +74,8 @@ while True:
         rfm9x.send(text_data)
         print("Sent text data: " + messages[num_printed])
         num_printed += 1
+
+        subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
+        light_status = 1 - light_status
 
     time.sleep(0.1)
