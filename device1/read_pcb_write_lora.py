@@ -59,6 +59,7 @@ def input_thread(messages, num_messages):
     while True:
         output = analogInput(0) # Reading from CH0
         output = convert(output) # Convert the data to useful stuff
+        # Repeat the above code for CH1, CH2, CH3
 
         messages.append(output)
         num_messages[0] += 1
