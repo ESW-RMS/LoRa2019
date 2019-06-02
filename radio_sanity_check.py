@@ -42,7 +42,6 @@ _thread.start_new_thread(input_thread, (messages, num_messages))
 print("RasPi LoRa")
 packet = None 
 while True:
-    # packet = None
 
     # check for packet rx
     packet = rfm9x.receive()
