@@ -26,12 +26,15 @@ RESET = DigitalInOut(board.D25)
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 rfm9x.tx_power = 23
-prev_packet = None
+
+# Start SPI connection
+spi2 = spidev.SpiDev()
+spi2.open(0,0)
 
 # Read MCP3008 data
 def analogInput(channel):
-  spi.max_speed_hz = 1350000
-  adc = spi.xfer2([1,(8+channel)<<4,0])
+  spi2.max_speed_hz = 1350000
+  adc = spi2.xfer2([1,(8+channel)<<4,0])
   data = ((adc[1]&3) << 8) + adc[2]
   return data
 
@@ -42,42 +45,24 @@ def convert(data):
   newData = round(newData, 2) # Round off to 2 decimal places
   return newData
 
-# Start thread to read input
-def input_thread(messages, num_messages):
-
-    # Start SPI connection
-    spi = spidev.SpiDev() # Created an object
-    spi.open(0,0)
-
-    while True:
-        output = analogInput(0) # Reading from CH0
-        output = convert(output) # Convert the data to useful stuff
-        # Repeat the above code for CH1, CH2, CH3
-
-        messages.append(output)
-        num_messages[0] += 1
-        time.sleep(5)
-
-num_messages = [0]
-num_printed = 0
-messages = []
-_thread.start_new_thread(input_thread, (messages, num_messages))
-
 light_status = 1
 
 print("RasPi reading from PCB and sending through LoRa")
-packet = None
 while True:
 
-    if num_messages[0] != num_printed:
-        # Send new text data
-        text_data = bytes(messages[num_printed] + "\r\n", "utf-8")
-        rfm9x.send(text_data)
-        print("Sent text data: " + messages[num_printed])
-        num_printed += 1
+    ## Read from serial port
+    #output = analogInput(0) # Reading from CH0
+    #output = convert(output) # Convert the data to useful stuff
+    ## Repeat the above code for CH1, CH2, CH3
+    output = "Hello world"
 
-        # Toggle RasPi onboard light
-        subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
-        light_status = 1 - light_status
+    # Send data to LoRa
+    text_data = bytes(str(output) + "\r\n", "utf-8")
+    rfm9x.send(text_data)
+    print("Sent data: " + str(output))
 
-    time.sleep(0.5)
+    # Toggle RasPi onboard light
+    subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
+    light_status = 1 - light_status
+
+    time.sleep(5)
