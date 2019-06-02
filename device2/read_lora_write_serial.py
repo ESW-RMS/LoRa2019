@@ -44,14 +44,16 @@ while True:
 
     # check for packet rx
     packet = rfm9x.receive()
+    print("-"),
     if packet is not None:
+
         # Display the packet text and rssi
         prev_packet = packet
-        packet_text = prev_packet.encode('utf-8').strip()
+        packet_text = str(prev_packet, "utf-8") #bytes(prev_packet, "utf-8")
 
         # Send the packet text to serial 
-        ser.write(packet_text)
-        print("RX: " + packet_text)
+        ser.write(packet_text.encode('utf-8').strip())
+        print("Sent to serial: " + packet_text)
 
         # Toggle light
         subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
