@@ -1,11 +1,11 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          start_lora
+# Provides:          start_device1
 # Required-Start:    $all
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:
-# Short-Description: Starts the LoRa python script
+# Short-Description: Starts the device 1 script
 ### END INIT INFO
 
 # /etc/init.d/start_device1
