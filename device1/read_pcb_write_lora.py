@@ -20,6 +20,11 @@ import threading
 import _thread
 import subprocess
 
+# Create SPI interface
+import spidev # To communicate with SPI devices
+from numpy import interp	# To scale values
+from time import sleep	# To add delay
+
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
 
@@ -31,21 +36,33 @@ rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
 rfm9x.tx_power = 23
 prev_packet = None
 
+# Read MCP3008 data
+def analogInput(channel):
+  spi.max_speed_hz = 1350000
+  adc = spi.xfer2([1,(8+channel)<<4,0])
+  data = ((adc[1]&3) << 8) + adc[2]
+  return data
+
+# Convert the data to useful info
+def convert(data):
+  newData = (data * 1) / float(1)
+  newData = round(newData, 2) # Round off to 2 decimal places
+  return newData
+
 # Start thread to read input
 def input_thread(messages, num_messages):
-    temp = 65
-    while True: 
 
-        #text = input()
-        #messages.append(text)
-        #num_messages[0] = num_messages[0] + 1
+    # Start SPI connection
+    spi = spidev.SpiDev() # Created an object
+    spi.open(0,0)
 
-        # Temporary! 
-        messages.append(chr(temp))
+    while True:
+        output = analogInput(0) # Reading from CH0
+        output = convert(output) # Convert the data to useful stuff
+
+        messages.append(output)
         num_messages[0] += 1
-        temp += 1
-        if temp > 122:
-            temp = 65
+        sleep(5)
 
 num_messages = [0]
 num_printed = 0
@@ -55,7 +72,7 @@ _thread.start_new_thread(input_thread, (messages, num_messages))
 light_status = 1
 
 print("RasPi reading from PCB and sending through LoRa")
-packet = None 
+packet = None
 while True:
 
     if num_messages[0] != num_printed:
@@ -65,7 +82,7 @@ while True:
         print("Sent text data: " + messages[num_printed])
         num_printed += 1
 
-        # Toggle RasPi onboard light 
+        # Toggle RasPi onboard light
         subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
         light_status = 1 - light_status
 
