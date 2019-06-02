@@ -44,6 +44,7 @@ def analogInput(channel):
   return data
 
 # Convert the data to useful info
+# I made up this stuff. Real calculations to come
 def convert(data):
   newData = (data * 1) / float(1)
   newData = round(newData, 2) # Round off to 2 decimal places
