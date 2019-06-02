@@ -6,24 +6,16 @@ Example for using the RFM9x Radio with Raspberry Pi.
 Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
 Author: Brent Rubell for Adafruit Industries
 """
-# Import Python System Libraries
 import time
-# Import Blinka Libraries
 import busio
 from digitalio import DigitalInOut, Direction, Pull
 import board
-# Import RFM9x
 import adafruit_rfm9x
-
-# Import more
 import threading
 import _thread
 import subprocess
-
-# Create SPI interface
 import spidev # To communicate with SPI devices
-from numpy import interp	# To scale values
-from time import sleep	# To add delay
+import numpy as np
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -64,7 +56,7 @@ def input_thread(messages, num_messages):
 
         messages.append(output)
         num_messages[0] += 1
-        sleep(5)
+        time.sleep(5)
 
 num_messages = [0]
 num_printed = 0
