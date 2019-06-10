@@ -51,10 +51,11 @@ while True:
         # Display the packet text and rssi
         prev_packet = packet
         packet_text = str(prev_packet, "utf-8") #bytes(prev_packet, "utf-8")
+        print("Sent to serial: " + packet_text)
 
         # Send the packet text to serial 
         ser.write(packet_text.encode('utf-8').strip())
-        print("Sent to serial: " + packet_text)
+
 
         time.sleep(1)
         
