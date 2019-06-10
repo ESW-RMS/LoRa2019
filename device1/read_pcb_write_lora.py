@@ -54,7 +54,7 @@ while True:
     #output = analogInput(0) # Reading from CH0
     #output = convert(output) # Convert the data to useful stuff
     ## Repeat the above code for CH1, CH2, CH3
-    output = "Hello world"
+    output = "Hello world\n"
 
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
