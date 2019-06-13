@@ -6,7 +6,7 @@ Device 1 consists of RasPi 1. Device 2 consists of RasPi 2 and Electron. RasPi 1
 
 See folders for individual device code. 
 
-# RasPi 1 Setup
+# Rasberry Pi Setup
 
 Device components
 - RFM9x LoRa Radio 
@@ -67,36 +67,37 @@ At this point the raspberry pi bootup screen should be visible on the monitor.
 
 ## 4. Setup ESW Code
 
-Open up a terminal and run the following commands: 
+Open up a terminal and download the code repository. 
 
 ```
 cd
 git clone https://github.com/ESW-RMS/LoRa2019.git
+``` 
+
+To setup the raspberry pi for device 1, run the following commands: 
+
+```
 cd LoRa2019/device1
 ./setup_device1.sh
 ```
 
-The setup script can take around X minutes to run to completion. Go get a snack and come back! 
-
-*Note: The setup script appends a line to ~/.profile such that the startup script runs every time RasPi 1 boots or is logged into.*
-
-# RasPi 2 setup
-
-Follow sections 1, 2, and 3 from RasPi 2 setup.  
-
-Open up a terminal and run the following commands: 
+For device 2, run this instead: 
 
 ```
-cd
-git clone https://github.com/ESW-RMS/LoRa2019.git
 cd LoRa2019/device2
 ./setup_device2.sh
 ```
 
 The setup script can take around X minutes to run to completion. Go get a snack and come back! 
 
-*Note: The setup script appends a line to ~/.profile such that the startup script runs every time RasPi 1 boots or is logged into.*
+*Note: The setup script appends a line to ~/.profile that runs the startup script on boot or login.*
+
+If everything is setup correctly, after rebooting the raspberry pi, the onboard LED should blink. RasPi 1 will blink every 5 seconds. RasPi 2 will blink once every .1 seconds. 
 
 # Electron setup 
 
 TODO
+
+# Assembly 
+
+Power both raspberry pis. Plug the electron into the raspberry pi for device 2. 
