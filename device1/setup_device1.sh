@@ -7,4 +7,4 @@
 sudo pip3 install adafruit-circuitpython-rfm9x
 
 # Set to run on startup 
-echo "/home/pi/LoRa2019/device1/start_device2.sh" >> ~/.profile
+echo "/home/pi/LoRa2019/device1/start_device1.sh" >> ~/.profile
