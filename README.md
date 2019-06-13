@@ -1,6 +1,4 @@
-# Engineering for a Sustainable World
-## IBEKA
-## 2018-2019
+# Engineering for a Sustainable World: <br> IBEKA 2018-2019
 
 *An overdetailed guide for preparing the IBEKA device from scratch*
 
