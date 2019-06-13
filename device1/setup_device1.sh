@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+sudo apt-get update
+sudo apt-get upgrade
+
 # Download LoRa Libraries 
 # Reference: https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/rfm9x-raspberry-pi-setup
 #sudo pip3 install adafruit-circuitpython-ssd1306
