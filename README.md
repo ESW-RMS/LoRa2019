@@ -95,7 +95,34 @@ The setup script can take around X minutes to run to completion. Go get a snack 
 
 *Note: The setup script appends a line to ~/.profile that runs the startup script on boot or login.*
 
-If everything is setup correctly, after rebooting the raspberry pi, the onboard LED should blink. Device 1 will blink every 5 seconds. Device 2 will blink once every .1 seconds. 
+### If Device 2
+
+Device 2 also needs to disable its serial port. 
+
+1. Run the raspi-config tool. This tool will allow us to easily disable the serial input/output interface that is enabled by default.
+
+```
+sudo raspi-config
+```
+
+2. This command will load up the Raspberry Pi configuration screen. This tool allows us to make quite a numerous amount of different changes to the Raspberry Pi’s configuration, for now, though we are only after one particular option. If you are after a more in-depth overview, you can check out our raspi-config tool guide.
+
+Use the arrow keys to go down and select “5 Interfacing Options“. Once this option has been selected, you can press Enter.
+
+3. With the next screen you will want to use the arrow keys again to select “P6 Serial“, press Enter once highlighted to select this option.
+
+4. You will now be prompted as to whether you want the login shell to be accessible over serial, select No with your arrow keys and press Enter to proceed.
+
+5. Immediately after you will be asked if you want to make use of the Serial Port Hardware, make sure that you select Yes with your arrow keys and press Enter to proceed.
+
+6. Once the Raspberry Pi has made the changes, you should see the following text appear on your screen.
+
+“The serial login shell is disabled
+The serial interface is enabled“.
+
+Instructions copied from https://pimylifeup.com/raspberry-pi-serial/. 
+
+#### If everything is setup correctly, after rebooting the raspberry pi, the onboard LED should blink. Device 1 will blink every 5 seconds. Device 2 will blink once every .1 seconds. 
 
 # Electron setup 
 
