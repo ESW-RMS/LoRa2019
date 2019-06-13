@@ -41,6 +41,9 @@ For setup
 - RST to GPIO 6
 
 Reference for raspberry pi pins: https://pi4j.com/1.2/pins/model-zerow-rev1.html
+
+Reference for troubleshooting wiring: https://learn.adafruit.com/lora-and-lorawan-radio-for-raspberry-pi/raspberry-pi-wiring
+
 Photos of the setup are included in the folder 'setup_photos'. 
 
 #### If you have an operating system preinstalled on the micro SD card, then skip section 2 ("Prepare the micro SD card"). 
