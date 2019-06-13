@@ -8,8 +8,6 @@ See folders for individual device code.
 
 # RasPi 1 Setup
 
-First get these:
-
 Device components
 - RFM9x LoRa Radio 
 - RFM9x LoRa Radio antenna
@@ -28,13 +26,11 @@ For setup
 - USB keyboard and mouse 
 - USB to micro USB
 
-## Setup RasPi basics 
-
 ## 1. Setup LoRa Wiring
 
-1. Solder the antenna to the RFM9x LoRa Radio. 
+1.1 Solder the antenna to the RFM9x LoRa Radio. 
 
-2. Connect the following with wires from the LoRa radio to RasPi 1: 
+1.2 Connect the following with wires from the LoRa radio to RasPi 1: 
 - (LoRa to RasPi)
 - VIN to 3.3 VDC Power
 - GND to Ground
@@ -45,39 +41,61 @@ For setup
 - RST to GPIO 6
 
 Reference for raspberry pi pins: https://pi4j.com/1.2/pins/model-zerow-rev1.html
-
 Photos of the setup are included in the folder 'setup_photos'. 
 
+#### If you have an operating system preinstalled on the micro SD card, then skip section 2 ("Prepare the micro SD card"). 
 
-If you have an operating system preinstalled on the micro SD card, then skip section 2 ("Prepare the micro SD card"). 
+## 2. Prepare the micro SD card 
 
-### 2. Prepare the micro SD card 
+2.1 Download balenaEtcher at https://www.balena.io/etcher/. 
 
-1. Download balenaEtcher at https://www.balena.io/etcher/. 
+2.2 Download the NOOBS zip file at https://www.raspberrypi.org/downloads/noobs/. 
 
-2. Download the NOOBS zip file at https://www.raspberrypi.org/downloads/noobs/. 
+2.3 Open balenaEtcher and follow the instructions to flash NOOBS onto the micro SD card. 
 
-3. Open balenaEtcher and follow the instructions to flash NOOBS onto the micro SD card. 
+## 3. Plug everything in
 
-### 3. Plug everything in
+3.1 Plug in the micro SD card. 
 
-1. Plug in the micro SD card. 
+3.2 Plug the HDMI cable into the HDMI cable to micro-HDMI converter, then into RasPi 1. Plug the other end of the HDMI cable into the monitor. 
 
-2. Plug the HDMI cable into the HDMI cable to micro-HDMI converter, then into RasPi 1. Plug the other end of the HDMI cable into the monitor. 
+3.3 Plug the keyboard and mouse into RasPi 1 using the USB to micro USB converter. 
 
-3. Plug the keyboard and mouse into RasPi 1 using the USB to micro USB converter. 
-
-4. Plug in the power cord. 
+3.4 Plug in the power cord. 
 
 At this point the raspberry pi bootup screen should be visible on the monitor. 
 
 ## 4. Setup ESW Code
 
-1. 
+Open up a terminal and run the following commands: 
+
+```
+cd
+git clone https://github.com/ESW-RMS/LoRa2019.git
+cd LoRa2019/device1
+./setup_device1.sh
+```
+
+The setup script can take around X minutes to run to completion. Go get a snack and come back! 
+
+*Note: The setup script appends a line to ~/.profile such that the startup script runs every time RasPi 1 boots or is logged into.*
 
 # RasPi 2 setup
 
-TODO 
+Follow sections 1, 2, and 3 from RasPi 2 setup.  
+
+Open up a terminal and run the following commands: 
+
+```
+cd
+git clone https://github.com/ESW-RMS/LoRa2019.git
+cd LoRa2019/device2
+./setup_device2.sh
+```
+
+The setup script can take around X minutes to run to completion. Go get a snack and come back! 
+
+*Note: The setup script appends a line to ~/.profile such that the startup script runs every time RasPi 1 boots or is logged into.*
 
 # Electron setup 
 
