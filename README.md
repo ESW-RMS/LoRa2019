@@ -15,16 +15,20 @@ Device components
 - micro SD card with Raspberry Pi OS (Raspian or NOOBS is fine) 
 - Raspberry Pi power cable
 
-For setup
+Device 2 additional components
+- micro USB to USB converter
+- USB to micro usb cable
+
+During setup
 - wiring
 - solder setup 
 - micro SD card reader 
-- hdmi cable
-- micro usb power cord 
-- HDMI to micro-HDMI converter 
+- micro USB power cord 
 - monitor with HDMI input
+- HDMI cable
+- micro-HDMI to HDMI converter 
 - USB keyboard and mouse 
-- USB to micro USB
+- micro USB to USB converter
 
 ## 1. Setup LoRa Wiring
 
@@ -91,7 +95,7 @@ cd LoRa2019/device2
 ./setup_device2.sh
 ```
 
-The setup script can take around X minutes to run to completion. Go get a snack and come back! 
+The setup script can take some time to run to completion. Go get a snack and come back! 
 
 *Note: The setup script appends a line to ~/.profile that runs the startup script on boot or login.*
 
@@ -105,9 +109,7 @@ Device 2 also needs to disable its serial port.
 sudo raspi-config
 ```
 
-2. This command will load up the Raspberry Pi configuration screen. This tool allows us to make quite a numerous amount of different changes to the Raspberry Pi’s configuration, for now, though we are only after one particular option. If you are after a more in-depth overview, you can check out our raspi-config tool guide.
-
-Use the arrow keys to go down and select “5 Interfacing Options“. Once this option has been selected, you can press Enter.
+2. This command will load up the Raspberry Pi configuration screen. Use the arrow keys to go down and select “5 Interfacing Options“. Once this option has been selected, you can press Enter.
 
 3. With the next screen you will want to use the arrow keys again to select “P6 Serial“, press Enter once highlighted to select this option.
 
