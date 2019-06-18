@@ -13,15 +13,6 @@ import RPi.GPIO as GPIO	# To use GPIO pins
 spi = spidev.SpiDev() # Created an object
 spi.open(0,0)
 
-# Initializing LED pin as OUTPUT pin
-led_pin = 20
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(led_pin, GPIO.OUT)
-
-# Creating a PWM channel at 100Hz frequency
-pwm = GPIO.PWM(led_pin, 100)
-pwm.start(0)
-
 # Read MCP3008 data
 def analogInput(channel):
   spi.max_speed_hz = 1350000
