@@ -87,8 +87,7 @@ To setup the Raspberry Pi for device 1, run the following commands:
 cd LoRa2019/device1
 ./setup_device1.sh
 ```
-If the terminal shows bash: ./setup_device1.sh: Permission denied
-Then run the following commands:
+If the terminal shows bash: ./setup_device1.sh: Permission denied then run the following commands:
 
 ```
 sudo chmod +x setup_device1.sh
