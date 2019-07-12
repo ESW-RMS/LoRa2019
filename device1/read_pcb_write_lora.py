@@ -74,7 +74,7 @@ while True:
     #    time.sleep(.001)
     #    i = i+1
 
-    #output = convert(output) # Convert the data to useful stuff
+    #output = convert(rawData) # Convert the data to useful stuff
 
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
