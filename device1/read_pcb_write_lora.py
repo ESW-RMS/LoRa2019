@@ -68,11 +68,10 @@ while True:
 
     output = "testing"
 
-    #while i < 500:
+    #for i in range(500):
     #    for x in range(4):
     #        rawData[x,i] = analogInput(x) # read from channel x
     #    time.sleep(.001)
-    #    i = i+1
 
     #output = convert(rawData) # Convert the data to useful stuff
 
