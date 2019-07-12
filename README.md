@@ -132,6 +132,13 @@ Instructions copied from https://pimylifeup.com/raspberry-pi-serial/.
 
 #### If everything is setup correctly, after rebooting the raspberry pi, the onboard LED should blink. Device 1 will blink every 5 seconds. Device 2 will blink once every .1 seconds. 
 
+If the raspi gives you a black screen when connected to the monitor (and the monitor is on) edit /boot/config.txt by plugging the microSD card into your computer and uncomment hdmi_safe=1
+From config.txt:
+```
+# uncomment if you get no picture on HDMI for a default "safe" mode
+hdmi_safe=1
+```
+
 # Electron setup 
 
 TODO
