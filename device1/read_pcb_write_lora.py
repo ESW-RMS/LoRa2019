@@ -16,6 +16,7 @@ import _thread
 import subprocess
 import spidev # To communicate with SPI devices
 import numpy as np
+import numpy.fft as fft
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -43,7 +44,14 @@ def convert(data):
   newData = np.absolute(data)
   peakVoltage = np.amax(data[0,:])
   peakCurrent = max([np.amax(data[1,:]) np.amax(data[2,:]) np.amax(data[3,:]])
+
+  # fast fourier transform for calculating frequency
+  # this is in beta mode, must be tested.
   frequency = 60 #calculate frequency
+  spectrum = fft.fft(float(data))
+  threshold = 0.5 * max(abs(spectrum))
+  mask = abs(spectrum) > threshold
+  peaks = freq[mask]
   newData = [peakVoltage peakCurrent frequency]
 
   # return array [Peak voltage, peak current, frequency]
@@ -58,13 +66,15 @@ while True:
     i = 1
     rawData = np.empty([4, 500])
 
-    while i < 500:
-        for x in range(4):
-            rawData[x,i] = analogInput(x) # read from channel x
-        time.sleep(.001)
-        i = i+1
+    output = "testing"
 
-    output = convert(output) # Convert the data to useful stuff
+    #while i < 500:
+    #    for x in range(4):
+    #        rawData[x,i] = analogInput(x) # read from channel x
+    #    time.sleep(.001)
+    #    i = i+1
+
+    #output = convert(output) # Convert the data to useful stuff
 
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
