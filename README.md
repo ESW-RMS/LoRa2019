@@ -6,7 +6,7 @@ Device 1 consists of a custom built PCB that measures triphase current and power
 
 See folders for individual device code. 
 
-# Rasberry Pi Setup
+# Raspberry Pi Setup
 
 Device components
 - RFM9x LoRa Radio 
