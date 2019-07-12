@@ -39,10 +39,12 @@ def analogInput(channel):
   return data
 
 # Convert the data to useful info
-# I made up this stuff. Real calculations to come
 def convert(data):
-  newData = (data * 1) / float(1)
+  a = np.array(data)
+  newData = np.absolute(a)
+  peak = np.amax(a)
   newData = round(newData, 2) # Round off to 2 decimal places
+  # return array [Peak voltage, frequency]
   return newData
 
 light_status = 1
@@ -51,9 +53,17 @@ print("RasPi reading from PCB and sending through LoRa")
 while True:
 
     ## Read from serial port
-    #output = analogInput(0) # Reading from CH0
+    #i = 1
+    #rawData = np.empty([4, 100])
+    
+    #while i < 100:
+    #  print(i)
+    #  for x in range(4):
+    #    rawData[x,i] = analogInput(x) # read from channel x
+    #  time.sleep(.01)
+    
     #output = convert(output) # Convert the data to useful stuff
-    ## Repeat the above code for CH1, CH2, CH3
+    
     output = "Hello world\n"
 
     # Send data to LoRa
