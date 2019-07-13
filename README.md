@@ -70,7 +70,9 @@ Photos of the setup are included in the folder 'setup_photos'.
 
 3.4 Plug in the power cord. 
 
-At this point the Raspberry Pi bootup screen should be visible on the monitor. 
+At this point the Raspberry Pi bootup screen should be visible on the monitor.
+
+Fyi, Pi password is "raspberry"
 
 ## 4. Setup ESW Code
 
