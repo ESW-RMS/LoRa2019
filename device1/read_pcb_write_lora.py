@@ -2,9 +2,10 @@
 
 """
 Example for using the RFM9x Radio with Raspberry Pi.
-
 Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
 Author: Brent Rubell for Adafruit Industries
+
+Old code: doesn't have EE stuff implemented
 """
 import time
 import busio
@@ -16,7 +17,6 @@ import _thread
 import subprocess
 import spidev # To communicate with SPI devices
 import numpy as np
-import numpy.fft as fft
 
 # Create the I2C interface.
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -40,21 +40,10 @@ def analogInput(channel):
   return data
 
 # Convert the data to useful info
+# I made up this stuff. Real calculations to come
 def convert(data):
-  newData = np.absolute(data)
-  peakVoltage = np.amax(data[0,:])
-  peakCurrent = max([np.amax(data[1,:]) np.amax(data[2,:]) np.amax(data[3,:]])
-
-  # fast fourier transform for calculating frequency
-  # this is in beta mode, must be tested.
-  frequency = 60 #calculate frequency
-  spectrum = fft.fft(float(data))
-  threshold = 0.5 * max(abs(spectrum))
-  mask = abs(spectrum) > threshold
-  peaks = freq[mask]
-  newData = [peakVoltage peakCurrent frequency]
-
-  # return array [Peak voltage, peak current, frequency]
+  newData = (data * 1) / float(1)
+  newData = round(newData, 2) # Round off to 2 decimal places
   return newData
 
 light_status = 1
@@ -63,16 +52,11 @@ print("RasPi reading from PCB and sending through LoRa")
 while True:
 
     ## Read from serial port
-    #i = 1
-    #rawData = np.empty([4, 500])
-    #for i in range(500):
-    #    for x in range(4):
-    #        rawData[x,i] = analogInput(x) # read from channel x
-    #    time.sleep(.001)
+    #output = analogInput(0) # Reading from CH0
+    #output = convert(output) # Convert the data to useful stuff
+    ## Repeat the above code for CH1, CH2, CH3
+    output = "Hello world\n"
 
-    #output = convert(rawData) # Convert the data to useful stuff
-
-    output = "testing\n"
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
     rfm9x.send(text_data)
