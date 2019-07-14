@@ -53,6 +53,8 @@ Photos of the setup are included in the folder 'setup_photos'.
 #### If you have an operating system preinstalled on the micro SD card, then skip section 2 ("Prepare the micro SD card"). 
 
 ## 2. Prepare the micro SD card 
+Just raspbian: https://thepi.io/how-to-install-raspbian-on-the-raspberry-pi/
+With NOOBS: https://thepi.io/how-to-install-noobs-on-the-raspberry-pi/
 
 2.1 Download balenaEtcher at https://www.balena.io/etcher/. 
 
