@@ -72,7 +72,7 @@ while True:
 
     #output = convert(rawData) # Convert the data to useful stuff
 
-    output = "testing"
+    output = "testing\n"
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
     rfm9x.send(text_data)
