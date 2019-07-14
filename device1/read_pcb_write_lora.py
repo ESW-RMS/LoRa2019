@@ -63,11 +63,8 @@ print("RasPi reading from PCB and sending through LoRa")
 while True:
 
     ## Read from serial port
-    i = 1
-    rawData = np.empty([4, 500])
-
-    output = "testing"
-
+    #i = 1
+    #rawData = np.empty([4, 500])
     #for i in range(500):
     #    for x in range(4):
     #        rawData[x,i] = analogInput(x) # read from channel x
@@ -75,6 +72,7 @@ while True:
 
     #output = convert(rawData) # Convert the data to useful stuff
 
+    output = "testing"
     # Send data to LoRa
     text_data = bytes(str(output) + "\r\n", "utf-8")
     rfm9x.send(text_data)
