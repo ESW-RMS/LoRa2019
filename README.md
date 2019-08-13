@@ -74,7 +74,7 @@ With NOOBS: https://thepi.io/how-to-install-noobs-on-the-raspberry-pi/
 
 At this point the Raspberry Pi bootup screen should be visible on the monitor.
 
-Fyi, Pi password is "raspberry"
+Fyi, Pi password is "raspberry" or "rms" or "esw"
 
 ## 4. Setup ESW Code
 
