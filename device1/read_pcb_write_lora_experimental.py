@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 
 """
+This version of the code has updated slave select, fft measurements,
+and data processing. However, some bugs are still being ironed out.
+
 RasPi Zero interface with PCB triphase power reader and LoRa antenna
 
 Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
