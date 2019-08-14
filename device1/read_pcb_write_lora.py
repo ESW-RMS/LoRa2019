@@ -9,6 +9,7 @@ import time
 import busio
 from digitalio import DigitalInOut, Direction, Pull
 import board
+import adafruit_ssd1306
 import adafruit_rfm9x
 import threading
 import _thread
@@ -34,7 +35,7 @@ currentClampRating = 20
 
 # Create the I2C interface.
 # Error here, for whatever reason can't find I2C
-#i2c = busio.I2C(board.SCL, board.SDA)
+i2c = busio.I2C(board.SCL, board.SDA)
 
 # Configure LoRa Radio
 CS = DigitalInOut(board.CE1)
