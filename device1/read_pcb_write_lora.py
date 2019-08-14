@@ -45,10 +45,10 @@ rfm9x.tx_power = 23
 
 # SPI initialization
 spi = spidev.SpiDev()
-spi.max_speed_hz = 1350000
 
 # Read MCP3008 data
 def analogInput(channel):
+    spi.max_speed_hz = 1350000
     adc = spi.xfer2([1,(8+channel)<<4,0])
     data = ((adc[1]&3) << 8) + adc[2]
     return data
