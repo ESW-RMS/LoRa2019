@@ -27,7 +27,7 @@ import subprocess
 import serial
 
 # Sending interval in seconds
-interval = 10 # 600 for ten minutes
+interval = 20 # 600 for ten minutes
 numSamples = 500
 waitTime = .005
 currentClampRating = 20
