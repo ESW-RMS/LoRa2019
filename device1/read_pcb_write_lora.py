@@ -93,7 +93,8 @@ while True:
             rawData[x,i] = analogInput(x) # read from channel x
         time.sleep(waitTime)
     spi.close()
-    output = bytes(str(freq(rawData)) + str(volt(rawData)) + str(curr(rawData)) + "\r\n", "utf-8")
+    #output = bytes(str(freq(rawData)) + str(volt(rawData)) + str(curr(rawData)) + "\r\n", "utf-8")
+    output = bytes(str("Test output") + "\r\n", "utf-8")
 
     print("Data computed")
     # Write to LoRa
