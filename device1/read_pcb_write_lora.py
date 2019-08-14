@@ -99,6 +99,6 @@ while True:
     time.sleep(interval/2) # wait x minutes
     spi.open(0,1) # open device 2
     rfm9x.send(output)
-    print("Sent data: " + str(output))
+    print("Sent data: " + str(output, 'utf-8') + " in bytes")
     spi.close() # close device 2
     time.sleep(interval/2) # wait x minutes
