@@ -109,6 +109,8 @@ The setup script can take some time to run to completion. Go get a snack and com
 
 *Note: The setup script appends a line to ~/.profile that runs the startup script on boot or login.*
 
+For both devices, enable the SPI interface using sudo raspi-config
+
 ### If Device 2
 
 Device 2 also needs to disable its serial port. 
