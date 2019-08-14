@@ -14,8 +14,8 @@ import adafruit_rfm9x
 import subprocess
 import serial
 
-# Create the I2C interface.
-i2c = busio.I2C(board.SCL, board.SDA)
+# Not necessary
+#i2c = busio.I2C(board.SCL, board.SDA)
 
 # Configure LoRa Radio
 CS = DigitalInOut(board.CE1)
@@ -55,7 +55,6 @@ while True:
 
         # Send the packet text to serial 
         ser.write(packet_text.encode('utf-8').strip())
-
 
         time.sleep(1)
         
