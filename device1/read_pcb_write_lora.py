@@ -27,7 +27,7 @@ import subprocess
 import serial
 
 # Sending interval in seconds
-interval = 20 # 600 for ten minutes
+interval = 600 #for ten minutes
 numSamples = 500
 waitTime = .005
 currentClampRating = 20
@@ -91,8 +91,7 @@ while True:
             rawData[x,i] = analogInput(x) # read from channel x
         time.sleep(waitTime)
     spi.close()
-    #output = bytes(freq(rawData)) + str(volt(rawData)) + str(curr(rawData) + "\r\n", "utf-8")
-    output = bytes("Test output\r\n", "utf-8")
+    output = bytes(freq(rawData)) + str(volt(rawData)) + str(curr(rawData) + "\r\n", "utf-8")
 
     print("Data computed")
     # Write to LoRa
