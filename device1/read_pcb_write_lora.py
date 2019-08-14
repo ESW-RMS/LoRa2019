@@ -1,11 +1,9 @@
 #!/usr/bin/python3
 
 """
-Example for using the RFM9x Radio with Raspberry Pi.
-Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
-Author: Brent Rubell for Adafruit Industries
+RasPi Zero interface with PCB triphase power reader and LoRa antenna
 
-Old code: doesn't have EE stuff implemented
+Learn Guide: https://learn.adafruit.com/lora-and-lorawan-for-raspberry-pi
 """
 import time
 import busio
@@ -17,53 +15,91 @@ import _thread
 import subprocess
 import spidev # To communicate with SPI devices
 import numpy as np
+#from numpy import sin
+#from math import pi
+
+import time
+import busio
+from digitalio import DigitalInOut, Direction, Pull
+import board
+import adafruit_rfm9x
+import subprocess
+import serial
+
+# Sending interval in seconds
+interval = 600
+numSamples = 500
+waitTime = .005
+currentClampRating = 20
 
 # Create the I2C interface.
-i2c = busio.I2C(board.SCL, board.SDA)
+# Error here, for whatever reason can't find I2C
+#i2c = busio.I2C(board.SCL, board.SDA)
 
 # Configure LoRa Radio
 CS = DigitalInOut(board.CE1)
 RESET = DigitalInOut(board.D25)
-spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-rfm9x = adafruit_rfm9x.RFM9x(spi, CS, RESET, 915.0)
+spi2 = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+rfm9x = adafruit_rfm9x.RFM9x(spi2, CS, RESET, 915.0)
 rfm9x.tx_power = 23
 
-# Start SPI connection
-spi2 = spidev.SpiDev()
-spi2.open(0,0)
+# SPI initialization
+spi = spidev.SpiDev()
+spi.max_speed_hz = 1350000
 
 # Read MCP3008 data
 def analogInput(channel):
-  spi2.max_speed_hz = 1350000
-  adc = spi2.xfer2([1,(8+channel)<<4,0])
-  data = ((adc[1]&3) << 8) + adc[2]
-  return data
+    adc = spi.xfer2([1,(8+channel)<<4,0])
+    data = ((adc[1]&3) << 8) + adc[2]
+    return data
 
-# Convert the data to useful info
-# I made up this stuff. Real calculations to come
-def convert(data):
-  newData = (data * 1) / float(1)
-  newData = round(newData, 2) # Round off to 2 decimal places
-  return newData
+# Find frequency from data using fft
+# Beta mode
+def freq(data):
+    #Fs=200.
+    #t = [i*1./Fs for i in range(1/waitTime)]
+    #fourier = np.fft.fft(data)
+    #frequencies = np.fft.fftfreq(len(t), waitTime)
+    #positive_frequencies = frequencies[np.where(frequencies >= 0)]
+    #magnitudes = abs(fourier[np.where(frequencies >= 0)])  # magnitude spectrum
+    #frequency = np.argmax(magnitudes)
+    frequency = 60
+    return frequency
+
+# Determine voltage value
+def volt(data):
+    newData = np.absolute(data)
+    peakVoltage = np.amax(newData[0,:])
+    return peakVoltage
+
+# Returns peak current value (of sine wave form)
+def curr(data):
+    newData = np.absolute(data)
+    x = np.array([np.amax(newData[1,:]), np.amax(newData[2,:]), np.amax(newData[3,:])])
+    peakCurrent = np.amax(x)
+    return peakCurrent * currentClampRating
 
 light_status = 1
 
 print("RasPi reading from PCB and sending through LoRa")
 while True:
 
-    ## Read from serial port
-    #output = analogInput(0) # Reading from CH0
-    #output = convert(output) # Convert the data to useful stuff
-    ## Repeat the above code for CH1, CH2, CH3
-    output = "Hello world\n"
+    # Read from serial port
+    i = 1
+    rawData = np.empty([4, numSamples])
+    spi.open(0,0)  #open device 1
+    for i in range(numSamples):
+        for x in range(4):
+            rawData[x,i] = analogInput(x) # read from channel x
+        time.sleep(waitTime)
+    spi.close()
+    output = bytes(str(freq(rawData)) + str(volt(rawData)) + str(curr(rawData)) + "\r\n", "utf-8")
 
-    # Send data to LoRa
-    text_data = bytes(str(output) + "\r\n", "utf-8")
-    rfm9x.send(text_data)
+    print("Data computed")
+    # Write to LoRa
+    time.sleep(interval/2) # wait x minutes
+    spi.open(0,1) # open device 2
+    rfm9x.send(output)
     print("Sent data: " + str(output))
-
-    # Toggle RasPi onboard light
-    subprocess.run(["echo " + str(light_status) + " >/sys/class/leds/led0/brightness"], shell=True)
-    light_status = 1 - light_status
-
-    time.sleep(5)
+    spi.close() # close device 2
+    time.sleep(interval/2) # wait x minutes
