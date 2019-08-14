@@ -32,9 +32,7 @@ numSamples = 500
 waitTime = .005
 currentClampRating = 20
 
-# Create the I2C interface.
-# Error here, for whatever reason can't find I2C
-i2c = busio.I2C(board.SCL, board.SDA)
+#i2c = busio.I2C(board.SCL, board.SDA) #i2c is not used in this project
 
 # Configure LoRa Radio
 CS = DigitalInOut(board.CE1)
