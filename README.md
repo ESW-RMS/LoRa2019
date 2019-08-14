@@ -108,8 +108,11 @@ cd LoRa2019/device2
 The setup script can take some time to run to completion. Go get a snack and come back! 
 
 *Note: The setup script appends a line to ~/.profile that runs the startup script on boot or login.*
+Device 2 also needs to disable its serial port.
 
-For both devices, enable the SPI interface using sudo raspi-config
+Run the raspi-config tool to enable SPI.
+sudo raspi-config
+This command will load up the Raspberry Pi configuration screen. Use the arrow keys to go down and select “5 Interfacing Options“. Then enable SPI.
 
 ### If Device 2
 
