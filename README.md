@@ -112,19 +112,19 @@ Device 2 also needs to disable its serial port.
 
 Run the raspi-config tool to enable SPI.
 sudo raspi-config
-This command will load up the Raspberry Pi configuration screen. Use the arrow keys to go down and select “5 Interfacing Options“. Then enable SPI.
+This command will load up the Raspberry Pi configuration screen. Use the arrow keys to go down and select “5 Interfacing Options“. Then enable SPI. You might also want to enable SSH: when the electron is plugged into the RasPi there's no port for the keyboard, so SSHing in over wifi is the only way to access it.
 
 ### If Device 2
 
 Device 2 also needs to disable its serial port. 
 
-1. Run the raspi-config tool. This tool will allow us to easily disable the serial input/output interface that is enabled by default.
+1. Run the raspi-config tool.
 
 ```
 sudo raspi-config
 ```
 
-2. This command will load up the Raspberry Pi configuration screen. Use the arrow keys to go down and select “5 Interfacing Options“. Once this option has been selected, you can press Enter.
+2. Use the arrow keys to go down and select “5 Interfacing Options“. Once this option has been selected, you can press Enter.
 
 3. With the next screen you will want to use the arrow keys again to select “P6 Serial“, press Enter once highlighted to select this option.
 
@@ -150,8 +150,37 @@ hdmi_safe=1
 
 # Electron setup 
 
-TODO
+There’s one Particle Electron per location. Follow the tutorial here to set it up: https://community.particle.io/t/electron-3rd-party-sim-tips/26490. For most efficient/painless process, would recommend reading this page first to understand how to setup a 3rd-party SIM card, then gathering the relevant required info (ICCID and APN), and then completing the tutorial itself. 
+
+Helpful page to decipher blinking LEDs: https://docs.particle.io/tutorials/device-os/led/electron/.
+
+Complete the following process for each Electron:
+Ask Dygdha to determine the location’s appropriate cell service provider and network. For the 2 Sumba locations = Telkomsel 2G, the 2 Mt. Ciptagelar locations = XL 3G
+Upon arrival in Indonesia, purchase and activate the appropriate SIM card based on provider and network
+We activated SIM card by putting in your phone. Call someone and receive a call...should be activated
+
+While SIM card still in phone, determine the ICCID of the SIM card. Follow Android (https://www.wikihow.tech/Find-Your-Sim-Card-Number-on-Android) or iPhone (https://twigby.zendesk.com/hc/en-us/articles/213023857-How-can-I-find-my-SIM-card-number-ICCID-on-my-iPhone) tutorial. For example, determined ICCID of Telkomsel 2G SIM card was 8962100085329251238 (but each SIM card will have its own ICCID)
+
+To determine the APN for the location, ask Dygdha or Google “[provider] APN 2019 [network]”
+For example, Google “Telkomsel APN 2019 3G”. Determine the APN is “telkomsel.” Dygdha mentioned that 2G and 3G should be same APN for respective providers. May change year to year, look up for current year. Although each SIM card will have unique ICCID, APN will be same for SIM cards with same provider and network types. XL was “Internet”
+
+Now that you’ve gathered the necessary info, time to follow the Particle Electron tutorial for 3rd-party SIM card: https://community.particle.io/t/electron-3rd-party-sim-tips/26490 
+
+At Step 2 of setup.particle.io, after downloading the custom firmware file, move it into your computer’s main directory. For ex on Mac: put firmware file in /Users/Zach directory
+Instead of following the tutorial’s Step 3, do the next steps. Download Node.js. This page helps with downloading the Particle CLI: https://docs.particle.io/tutorials/developer-tools/cli/ 
+Open Finder (for Mac) and follow the filepath to “Mac/Users/Zach/bin” The bin file is when running the CLI download Terminal command 
+Double-click the “particle” file
+Run the command in Terminal: particle login
+Follow Terminal’s instructions to login (using the Particle Electron Cloud Login Information provided above)
+If this doesn’t work for later steps, try the provided Step 2 instructions
+e.  You’re finished with this subprocedure. Continue with Step 4. 
+f.  You will be prompted to name the Electron. Before doing so, visit the IFTTT portal (https://ifttt.com/my_applets) and notice how the previous Electrons have been named (ex: 1819sumba1 corresponds to the Sumba Kamanjara installation). The name you assign to this Electron must match when you create its corresponding Applet in IFTTT aka it’s the link between the two systems 
+
+Once you’ve successfully completed the entire tutorial, you will be taken to the website “build.particle.io” From here, you can write your own Particle App or load an existing updated one created during your ESW year (by making sure the Electron is connected to your computer via USB and then clicking the Flash (lightning bolt) icon. The 18-19 code is ESW_IBEKA_1819_MAIN
+When flashing the code to the desired Electron, look in the bottom right corner of the black code screen and make sure the device name is the desired Electron device. If so, flash. If not, click Devices in the left toolbar and click the desired device to star it. Returning to the code window, it should now be in the bottom right corner, allowing you to flash the code to it. In order to flash a program to the Electron, the Electron must be connected with USB to your computer, no flashing over wifi.
+
+Make sure in the command “Particle.publish("SUM2_DATA", c, PUBLIC),” the first argument matches in IFTTT the Event Name first step.
+
 
 # Assembly 
-
-Power both Raspberry Pi's. Plug the Electron into the Raspberry Pi for Device 2. 
+See the guide: https://docs.google.com/document/d/1eoOL6ycpx3u1b9OP86EHPXVrBaiWyDBE23J0aYlFA0I/edit?usp=sharing
