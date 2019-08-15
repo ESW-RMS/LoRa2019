@@ -5,6 +5,7 @@
 Device 1 consists of a custom built PCB that measures triphase current and power from current clamps and a Raspberry Pi. Device 2 consists of a Raspberry Pi and a Particle Electron. Device 1 uses the Raspberry Pi to read in signal information and transfers the data over LoRa communication to Device 2, which uses LoRa communication to read in the data to a Raspberry Pi then sends it over a usb serial connection to a Particle Electron. 
 
 See folders for individual device code. 
+Detailed assembly guide: https://docs.google.com/document/d/1eoOL6ycpx3u1b9OP86EHPXVrBaiWyDBE23J0aYlFA0I/edit?usp=sharing
 
 # Raspberry Pi Setup
 
